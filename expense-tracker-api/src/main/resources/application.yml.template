@@ -1,8 +1,8 @@
 spring:
   datasource:
     url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5431/expenses_api}
-    username: ${SPRING_DATASOURCE_USERNAME:postgres}
-    password: ${SPRING_DATASOURCE_PASSWORD:password}
+    username: ${SPRING_DATASOURCE_USERNAME:${YOUR_USERNAME}}
+    password: ${SPRING_DATASOURCE_PASSWORD:${YOUR_PASSWORD}}
     driver-class-name: org.postgresql.Driver
     hikari:
       maximum-pool-size: 10
