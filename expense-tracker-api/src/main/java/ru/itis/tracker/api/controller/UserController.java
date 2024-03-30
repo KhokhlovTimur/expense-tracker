@@ -21,11 +21,4 @@ public class UserController implements UserApi {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(userService.save(userDto));
     }
-
-    @GetMapping("/us")
-    public void re()
-    {}
-
-    @GetMapping("/admin/1")
-    public void d(){}
 }
