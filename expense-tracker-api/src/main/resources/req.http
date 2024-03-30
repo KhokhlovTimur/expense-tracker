@@ -1,9 +1,32 @@
-POST http://localhost:8080/user
+POST http://localhost:8080/api/auth/token
+Content-Type: application/x-www-form-urlencoded
+
+email=1@ok.ru&password=12333232
+
+###
+POST http://localhost:8080/api/auth/token
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxQG9rLnJ1Iiwicm9sZSI6IlVTRVIiLCJpc3MiOiIvYXBpL2F1dGgvdG9rZW4iLCJleHAiOjE3MTE5MDEyNzh9.I5ndlq8uf8Ivygwy6xqZ2bYfBqXtc98nkggs2byVWkU
+
+###
+POST http://localhost:8080/api/revoke/token
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxQG9rLnJ1Iiwicm9sZSI6IlVTRVIiLCJpc3MiOiIvYXBpL2F1dGgvdG9rZW4iLCJleHAiOjE3MTE4MjYwNzR9.wpE0tyIz0ac6OQ7LwxkCaQgFMDECJUH7GJ1Kw9D9frI
+
+###
+POST http://localhost:8080/api/user
 Content-Type: application/json
 
 {
   "name": "name",
   "surname": "surname",
-  "email": "1234@ok.ru",
-  "password": "12333232"
+  "email": "admin@mail.ru",
+  "password": "admin"
 }
+
+
+###
+GET http://localhost:8080/api/us
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxQG9rLnJ1Iiwicm9sZSI6IlVTRVIiLCJpc3MiOiIvYXBpL2F1dGgvdG9rZW4iLCJleHAiOjE3MTE4MjYwNzR9.wpE0tyIz0ac6OQ7LwxkCaQgFMDECJUH7GJ1Kw9D9frI
+
+###
+GET http://localhost:8080/api/admin/1
+Authorization: Bearer 1

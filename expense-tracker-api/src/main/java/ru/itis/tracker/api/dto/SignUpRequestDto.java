@@ -31,7 +31,7 @@ public class SignUpRequestDto {
     @Schema(description = "Почта", example = "123@ok.com", requiredMode = REQUIRED)
     private String email;
 
-    @Size(min = 5, max = 100)
+    @Size(min = 5, max = 20)
     @Schema(description = "Пароль", example = "123456789", requiredMode = REQUIRED)
     private String password;
 }

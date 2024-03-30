@@ -11,10 +11,13 @@ services:
       - "8080:8080"
     depends_on:
       - postgres
+      - redis
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB:-expenses_api}
       SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER:-postgres}
       SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-password}
+      SPRING_REDIS_HOST: redis
+      SPRING_REDIS_PORT: 6379
 
   postgres:
     image: postgres:latest
@@ -34,5 +37,15 @@ services:
     volumes:
       - postgres_volume:/var/lib/postgresql/data
 
+  redis:
+    image: redis
+    container_name: 'redis'
+    hostname: 'redis'
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_volume:/var/lib/redis/data
+
 volumes:
   postgres_volume:
+  redis_volume:
