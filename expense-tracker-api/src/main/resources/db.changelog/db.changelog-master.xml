@@ -8,5 +8,4 @@
     <include file="changesets/init-tables.xml" relativeToChangelogFile="true"/>
     <include file="changesets/add-user-role.xml" relativeToChangelogFile="true"/>
     <include file="changesets/add-primary-key-to-bank-account.xml" relativeToChangelogFile="true"/>
-
 </databaseChangeLog>

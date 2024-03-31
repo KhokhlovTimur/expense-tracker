@@ -9,15 +9,13 @@ import org.springframework.stereotype.Service;
 import ru.itis.tracker.api.dto.bank.BankDto;
 import ru.itis.tracker.api.dto.bank.BanksPage;
 import ru.itis.tracker.api.dto.bank.CreateBankRequestDto;
-import ru.itis.tracker.api.dto.bank.UpdateRequestBankDto;
+import ru.itis.tracker.api.dto.bank.UpdateBankRequestDto;
 import ru.itis.tracker.api.exception.AlreadyExistsException;
 import ru.itis.tracker.api.exception.NotFoundException;
 import ru.itis.tracker.api.mapper.BankMapper;
 import ru.itis.tracker.api.model.Bank;
-import ru.itis.tracker.api.model.User;
 import ru.itis.tracker.api.repository.BankRepository;
 
-import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -69,7 +67,7 @@ public class BankServiceImpl implements BankService {
     }
 
     @Override
-    public BankDto update(UUID id, UpdateRequestBankDto bankDto) {
+    public BankDto update(UUID id, UpdateBankRequestDto bankDto) {
         Bank bank = getOrThrow(id);
         UniqueCheckBuilder checkBuilder = new UniqueCheckBuilder(bankDto);
 

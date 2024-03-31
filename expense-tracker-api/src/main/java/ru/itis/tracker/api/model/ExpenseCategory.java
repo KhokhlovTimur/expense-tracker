@@ -1,11 +1,9 @@
 package ru.itis.tracker.api.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Currency;
 import java.util.UUID;
 
 @Entity(name = "expense_categories")
@@ -19,4 +17,11 @@ public class ExpenseCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    private String name;
+    private int budget;
 }

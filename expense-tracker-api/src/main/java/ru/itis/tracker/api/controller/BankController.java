@@ -8,7 +8,7 @@ import ru.itis.tracker.api.controller.api.BankApi;
 import ru.itis.tracker.api.dto.bank.BankDto;
 import ru.itis.tracker.api.dto.bank.BanksPage;
 import ru.itis.tracker.api.dto.bank.CreateBankRequestDto;
-import ru.itis.tracker.api.dto.bank.UpdateRequestBankDto;
+import ru.itis.tracker.api.dto.bank.UpdateBankRequestDto;
 import ru.itis.tracker.api.service.BankService;
 
 import java.util.UUID;
@@ -34,7 +34,7 @@ public class BankController implements BankApi {
     }
 
     @Override
-    public ResponseEntity<BankDto> update(UUID id, UpdateRequestBankDto bankDto) {
+    public ResponseEntity<BankDto> update(UUID id, UpdateBankRequestDto bankDto) {
         return ResponseEntity.accepted()
                 .body(bankService.update(id, bankDto));
     }

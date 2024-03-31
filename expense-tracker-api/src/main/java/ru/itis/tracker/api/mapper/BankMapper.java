@@ -15,7 +15,7 @@ public interface BankMapper {
 
     Bank toModel(CreateBankRequestDto bankRequestDto);
 
-    Bank toModel(UpdateRequestBankDto bankDto);
+    Bank toModel(UpdateBankRequestDto bankDto);
 
     BankDto toDto(Bank bank);
 
