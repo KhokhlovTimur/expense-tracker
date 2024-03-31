@@ -30,7 +30,7 @@ Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxQG9rLnJ1I
 ###
 POST http://localhost:8080/api/bank
 Content-Type: application/json
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxQG9rLnJ1Iiwicm9sZSI6IlVTRVIiLCJpc3MiOiIvYXBpL2F1dGgvdG9rZW4iLCJleHAiOjE3MTE4NzkxNDB9.1oHl2FLcJUGfh9MDTjT_q8aJAp7DHqxPv776KxsIOL8
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxQG9rLnJ1Iiwicm9sZSI6IlVTRVIiLCJpc3MiOiIvYXBpL2F1dGgvdG9rZW4iLCJleHAiOjE3MTE4ODg2NDF9.w6q0QHooYQbmsZ66emrMNhOLCzCEsWrB_lKRdIV7wN0
 
 {
   "name": "Банк",

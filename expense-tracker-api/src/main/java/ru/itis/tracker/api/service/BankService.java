@@ -4,6 +4,7 @@ import ru.itis.tracker.api.dto.bank.BankDto;
 import ru.itis.tracker.api.dto.bank.BanksPage;
 import ru.itis.tracker.api.dto.bank.CreateBankRequestDto;
 import ru.itis.tracker.api.dto.bank.UpdateRequestBankDto;
+import ru.itis.tracker.api.model.Bank;
 
 import java.util.UUID;
 
@@ -14,6 +15,8 @@ public interface BankService {
     BankDto update(UUID id, UpdateRequestBankDto bankDto);
 
     BankDto findById(UUID id);
+
+    Bank findModelById(UUID id);
 
     BanksPage findAll(int pageNumber);
 

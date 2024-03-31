@@ -53,7 +53,7 @@ public interface BankApi {
     })
     ResponseEntity<BankDto> update(@PathVariable("id") UUID id, @RequestBody @Valid UpdateRequestBankDto bankDto);
 
-    @GetMapping("/{id}")
+    @GetMapping("/bank/{id}")
     @Operation(summary = "Получение информации о банке")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Информация о банке",

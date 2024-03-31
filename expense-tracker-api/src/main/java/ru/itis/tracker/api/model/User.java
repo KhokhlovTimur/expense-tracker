@@ -5,6 +5,7 @@ import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
+import java.util.Set;
 import java.util.UUID;
 
 @Entity(name = "users")
@@ -23,6 +24,9 @@ public class User {
     private String surname;
     private String email;
     private String password;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private Set<BankAccount> bankAccounts;
 
     @JdbcTypeCode(SqlTypes.NAMED_ENUM)
     @Column(columnDefinition = "user_role_enum")

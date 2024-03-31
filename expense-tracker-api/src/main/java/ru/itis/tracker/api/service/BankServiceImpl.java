@@ -50,6 +50,11 @@ public class BankServiceImpl implements BankService {
     }
 
     @Override
+    public Bank findModelById(UUID id) {
+        return getOrThrow(id);
+    }
+
+    @Override
     public BankDto save(CreateBankRequestDto bankDto) {
         new UniqueCheckBuilder(bankDto)
                 .bic()

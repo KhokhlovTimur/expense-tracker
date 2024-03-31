@@ -7,9 +7,12 @@ import org.springframework.stereotype.Service;
 import ru.itis.tracker.api.dto.user.SignUpRequestDto;
 import ru.itis.tracker.api.dto.user.UserDto;
 import ru.itis.tracker.api.exception.AlreadyExistsException;
+import ru.itis.tracker.api.exception.NotFoundException;
 import ru.itis.tracker.api.mapper.UserMapper;
 import ru.itis.tracker.api.model.User;
 import ru.itis.tracker.api.repository.UserRepository;
+
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -36,6 +39,25 @@ public class UserServiceImpl implements UserService {
         return userMapper.toDto(
                 userRepository.save(user)
         );
+    }
+
+    @Override
+    public UserDto findById(UUID id) {
+        return userMapper.toDto(
+                getOrThrow(id)
+        );
+    }
+
+    @Override
+    public User findModelById(UUID id) {
+        return getOrThrow(id);
+    }
+
+    private User getOrThrow(UUID id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(
+                        String.format("Пользователя с id [%s] не существует", id)
+                ));
     }
 
 
