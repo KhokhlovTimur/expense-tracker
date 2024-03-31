@@ -34,3 +34,6 @@ jwt:
     expires-time: 10800000
   refresh-token:
     expires-time: 86400000
+
+default:
+  page-size: 16
