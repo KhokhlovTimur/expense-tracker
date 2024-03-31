@@ -10,23 +10,22 @@ import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.itis.tracker.api.dto.ExceptionDto;
-import ru.itis.tracker.api.dto.bank.BankDto;
-import ru.itis.tracker.api.dto.bank.BanksPage;
-import ru.itis.tracker.api.dto.bank.CreateBankRequestDto;
-import ru.itis.tracker.api.dto.bank.UpdateBankRequestDto;
+import ru.itis.tracker.api.dto.expense.CreateExpenseCategoryDto;
+import ru.itis.tracker.api.dto.expense.ExpenseCategoryDto;
+import ru.itis.tracker.api.dto.expense.UpdateExpenseCategoryRequestDto;
 
 import java.util.UUID;
 
-@Tag(name = "Bank")
-public interface BankApi {
+@Tag(name = "Expense category")
+public interface ExpenseCategoryApi {
 
-    @PostMapping("/bank")
-    @Operation(summary = "Добавление банка")
+    @PostMapping("/expense/category")
+    @Operation(summary = "Добавление категории расхода")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Добавленный банк",
+            @ApiResponse(responseCode = "201", description = "Добавленная категория",
                     content = {
                             @Content(mediaType = "application/json",
-                                    schema = @Schema(implementation = BankDto.class))
+                                    schema = @Schema(implementation = ExpenseCategoryDto.class))
                     }),
             @ApiResponse(responseCode = "409", description = "Информация об ошибке",
                     content = {
@@ -34,15 +33,31 @@ public interface BankApi {
                                     schema = @Schema(implementation = ExceptionDto.class))
                     })
     })
-    ResponseEntity<BankDto> save(@RequestBody @Valid CreateBankRequestDto bankDto);
+    ResponseEntity<ExpenseCategoryDto> add(@RequestBody @Valid CreateExpenseCategoryDto categoryDto);
 
-    @PatchMapping("/bank/{id}")
-    @Operation(summary = "Обновление информации о банке")
+    @GetMapping("/expense/category/{id}")
+    @Operation(summary = "Получение информации о категории расходов")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "202", description = "Обновленная информация",
+            @ApiResponse(responseCode = "200", description = "Информация о категории расходов",
                     content = {
                             @Content(mediaType = "application/json",
-                                    schema = @Schema(implementation = BankDto.class))
+                                    schema = @Schema(implementation = ExpenseCategoryDto.class))
+                    }),
+            @ApiResponse(responseCode = "404", description = "Информация об ошибке",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = ExceptionDto.class))
+                    })
+    })
+    ResponseEntity<ExpenseCategoryDto> findById(@PathVariable("id") UUID id);
+
+    @PatchMapping("/expense/category/{id}")
+    @Operation(summary = "Обновление информации о категории расхода")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "202", description = "Обновленная информация категории расхода",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = ExpenseCategoryDto.class))
                     }),
             @ApiResponse(responseCode = "404", description = "Информация об ошибке",
                     content = {
@@ -51,32 +66,10 @@ public interface BankApi {
                     })
 
     })
-    ResponseEntity<BankDto> update(@PathVariable("id") UUID id, @RequestBody @Valid UpdateBankRequestDto bankDto);
+    ResponseEntity<ExpenseCategoryDto> update(@PathVariable("id") UUID id, @RequestBody @Valid UpdateExpenseCategoryRequestDto categoryDto);
 
-    @GetMapping("/bank/{id}")
-    @Operation(summary = "Получение информации о банке")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Информация о банке",
-                    content = {
-                            @Content(mediaType = "application/json",
-                                    schema = @Schema(implementation = BankDto.class))
-                    }),
-            @ApiResponse(responseCode = "404", description = "Информация об ошибке",
-                    content = {
-                            @Content(mediaType = "application/json",
-                                    schema = @Schema(implementation = ExceptionDto.class))
-                    })
-    })
-    ResponseEntity<BankDto> findById(@PathVariable("id") UUID id);
+    @DeleteMapping("/expense/category/{id}")
+    @Operation(summary = "Удаление категории расхода")
+    ResponseEntity<Void> delete(@PathVariable("id") UUID id);
 
-    @GetMapping("/banks")
-    @Operation(summary = "Получение информации о всех банках")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Информация о банках",
-                    content = {
-                            @Content(mediaType = "application/json",
-                                    schema = @Schema(implementation = BanksPage.class))
-                    })
-    })
-    ResponseEntity<BanksPage> findAll(@RequestParam("page") int pageNumber);
 }

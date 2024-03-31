@@ -1,9 +1,6 @@
 package ru.itis.tracker.api.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.UUID;
@@ -17,6 +14,13 @@ import java.util.UUID;
 public class BankAccount {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    private String accountNumber;
+
+    @OneToOne
+    @JoinColumn(name = "bank_id")
+    private Bank bank;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }

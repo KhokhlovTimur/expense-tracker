@@ -55,12 +55,6 @@ public class SecurityConfig {
                 .addFilterBefore(authorizationFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterAt(logoutFilter, LogoutFilter.class)
 
-                .exceptionHandling(configurer ->
-                        configurer
-                                .authenticationEntryPoint((request, response, authException) -> {
-                                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                                }))
-
                 .sessionManagement(configurer ->
                         configurer
                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS))

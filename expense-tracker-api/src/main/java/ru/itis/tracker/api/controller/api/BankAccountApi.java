@@ -13,22 +13,20 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import ru.itis.tracker.api.dto.ExceptionDto;
+import ru.itis.tracker.api.dto.bank.AddBankAccountDto;
+import ru.itis.tracker.api.dto.bank.BankAccountDto;
 import ru.itis.tracker.api.dto.bank.BankDto;
-import ru.itis.tracker.api.dto.user.SignUpRequestDto;
-import ru.itis.tracker.api.dto.user.UserDto;
 
-import java.util.UUID;
+@Tag(name = "Bank account")
+public interface BankAccountApi {
 
-@Tag(name = "User")
-public interface UserApi {
-
-    @PostMapping("/user")
-    @Operation(summary = "Регистрация пользователя")
+    @PostMapping("/bank/account")
+    @Operation(summary = "Добавление банковского счета")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Зарегистрированный пользователь",
+            @ApiResponse(responseCode = "201", description = "Добавленный счет",
                     content = {
                             @Content(mediaType = "application/json",
-                                    schema = @Schema(implementation = UserDto.class))
+                                    schema = @Schema(implementation = BankAccountDto.class))
                     }),
             @ApiResponse(responseCode = "409", description = "Информация об ошибке",
                     content = {
@@ -36,15 +34,15 @@ public interface UserApi {
                                     schema = @Schema(implementation = ExceptionDto.class))
                     })
     })
-    ResponseEntity<UserDto> save(@RequestBody @Valid SignUpRequestDto userDto);
+    ResponseEntity<BankAccountDto> save(@RequestBody @Valid AddBankAccountDto accountDto);
 
-    @GetMapping("/user/{id}")
-    @Operation(summary = "Получение информации о пользователе")
+    @GetMapping("/bank/account/{number}")
+    @Operation(summary = "Получение информации о счете")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Информация о пользователе",
+            @ApiResponse(responseCode = "200", description = "Информация о счете",
                     content = {
                             @Content(mediaType = "application/json",
-                                    schema = @Schema(implementation = UserDto.class))
+                                    schema = @Schema(implementation = BankAccountDto.class))
                     }),
             @ApiResponse(responseCode = "404", description = "Информация об ошибке",
                     content = {
@@ -52,5 +50,6 @@ public interface UserApi {
                                     schema = @Schema(implementation = ExceptionDto.class))
                     })
     })
-    ResponseEntity<UserDto> findById(@PathVariable("id") UUID id);
+    ResponseEntity<BankAccountDto> findByAccountNumber(@PathVariable("number") String number);
+
 }
