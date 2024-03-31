@@ -1,4 +1,4 @@
-package ru.itis.tracker.api.dto;
+package ru.itis.tracker.api.dto.user;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;

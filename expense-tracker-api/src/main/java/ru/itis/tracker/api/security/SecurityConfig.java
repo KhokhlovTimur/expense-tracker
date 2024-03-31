@@ -64,9 +64,10 @@ public class SecurityConfig {
                 .sessionManagement(configurer ->
                         configurer
                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+
                 .authorizeHttpRequests(configurer ->
                         configurer
-                                .requestMatchers("/swagger-ui/index.html/**").permitAll()
+                                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                                 .requestMatchers(new AntPathRequestMatcher("/user", HttpMethod.POST.name())).permitAll()
                                 .requestMatchers(AUTHENTICATION_PATH).permitAll()
                                 .requestMatchers(LOGOUT_PATH).authenticated()

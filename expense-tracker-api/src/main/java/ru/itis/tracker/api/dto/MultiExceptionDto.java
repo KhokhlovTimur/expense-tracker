@@ -16,5 +16,5 @@ import java.util.List;
 public class MultiExceptionDto {
 
     @Schema(description = "Сообщения об ошибках")
-    private List<String> messages;
+    private List<ExceptionDto> messages;
 }

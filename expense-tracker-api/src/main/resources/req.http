@@ -28,5 +28,15 @@ GET http://localhost:8080/api/us
 Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxQG9rLnJ1Iiwicm9sZSI6IlVTRVIiLCJpc3MiOiIvYXBpL2F1dGgvdG9rZW4iLCJleHAiOjE3MTE4MjYwNzR9.wpE0tyIz0ac6OQ7LwxkCaQgFMDECJUH7GJ1Kw9D9frI
 
 ###
-GET http://localhost:8080/api/admin/1
-Authorization: Bearer 1
+POST http://localhost:8080/api/bank
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxQG9rLnJ1Iiwicm9sZSI6IlVTRVIiLCJpc3MiOiIvYXBpL2F1dGgvdG9rZW4iLCJleHAiOjE3MTE4NzkxNDB9.1oHl2FLcJUGfh9MDTjT_q8aJAp7DHqxPv776KxsIOL8
+
+{
+  "name": "Банк",
+  "bic": "222222222",
+  "correspondentAccount": "22222222200000000600",
+  "kpp": "111111111",
+  "inn": "111111111111",
+  "ogrn": "1111111111111"
+}

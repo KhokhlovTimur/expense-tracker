@@ -43,6 +43,7 @@ public class AuthenticationUtilsImpl implements AuthenticationUtils {
 
                 SecurityContextHolder.getContext().setAuthentication(authentication);
 
+                filterChain.doFilter(request, response);
             } catch (JWTVerificationException e) {
                 log.error(e.getMessage());
                 response.setStatus(HttpStatus.FORBIDDEN.value());
