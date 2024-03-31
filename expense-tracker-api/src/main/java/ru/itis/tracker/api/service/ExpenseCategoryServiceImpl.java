@@ -61,6 +61,11 @@ public class ExpenseCategoryServiceImpl implements ExpenseCategoryService {
         );
     }
 
+    @Override
+    public ExpenseCategory findModelById(UUID id) {
+        return getOrThrow(id);
+    }
+
     private ExpenseCategory getOrThrow(UUID id) {
         return expenseCategoryRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(String.format("Категории с id [%s] не существует", id)));
