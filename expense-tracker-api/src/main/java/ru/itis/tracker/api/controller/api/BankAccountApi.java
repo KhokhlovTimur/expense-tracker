@@ -8,19 +8,19 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 import ru.itis.tracker.api.dto.ExceptionDto;
 import ru.itis.tracker.api.dto.bank.AddBankAccountDto;
 import ru.itis.tracker.api.dto.bank.BankAccountDto;
-import ru.itis.tracker.api.dto.bank.BankDto;
+import ru.itis.tracker.api.dto.bank.BankAccountPage;
 
-@Tag(name = "Bank account")
+import java.util.UUID;
+
+
 public interface BankAccountApi {
 
     @PostMapping("/bank/account")
+    @Tag(name = "Bank account")
     @Operation(summary = "Добавление банковского счета")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Добавленный счет",
@@ -37,6 +37,7 @@ public interface BankAccountApi {
     ResponseEntity<BankAccountDto> save(@RequestBody @Valid AddBankAccountDto accountDto);
 
     @GetMapping("/bank/account/{number}")
+    @Tag(name = "Bank account")
     @Operation(summary = "Получение информации о счете")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Информация о счете",
@@ -51,5 +52,17 @@ public interface BankAccountApi {
                     })
     })
     ResponseEntity<BankAccountDto> findByAccountNumber(@PathVariable("number") String number);
+
+    @GetMapping("/user/{id}/accounts")
+    @Tag(name = "User")
+    @Operation(summary = "Получение счетов пользователя")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Информация о счетах",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = BankAccountPage.class))
+                    })
+    })
+    ResponseEntity<BankAccountPage> findAllByUserId(@PathVariable("id") UUID id, @RequestParam("page") int pageNumber);
 
 }

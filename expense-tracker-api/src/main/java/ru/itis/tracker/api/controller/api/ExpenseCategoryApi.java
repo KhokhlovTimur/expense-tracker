@@ -10,16 +10,14 @@ import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.itis.tracker.api.dto.ExceptionDto;
-import ru.itis.tracker.api.dto.expense.CreateExpenseCategoryDto;
-import ru.itis.tracker.api.dto.expense.ExpenseCategoryDto;
-import ru.itis.tracker.api.dto.expense.UpdateExpenseCategoryRequestDto;
+import ru.itis.tracker.api.dto.expense.*;
 
 import java.util.UUID;
 
-@Tag(name = "Expense category")
 public interface ExpenseCategoryApi {
 
     @PostMapping("/expense/category")
+    @Tag(name = "Expense category")
     @Operation(summary = "Добавление категории расхода")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Добавленная категория",
@@ -36,6 +34,7 @@ public interface ExpenseCategoryApi {
     ResponseEntity<ExpenseCategoryDto> add(@RequestBody @Valid CreateExpenseCategoryDto categoryDto);
 
     @GetMapping("/expense/category/{id}")
+    @Tag(name = "Expense category")
     @Operation(summary = "Получение информации о категории расходов")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Информация о категории расходов",
@@ -52,6 +51,7 @@ public interface ExpenseCategoryApi {
     ResponseEntity<ExpenseCategoryDto> findById(@PathVariable("id") UUID id);
 
     @PatchMapping("/expense/category/{id}")
+    @Tag(name = "Expense category")
     @Operation(summary = "Обновление информации о категории расхода")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "202", description = "Обновленная информация категории расхода",
@@ -69,7 +69,20 @@ public interface ExpenseCategoryApi {
     ResponseEntity<ExpenseCategoryDto> update(@PathVariable("id") UUID id, @RequestBody @Valid UpdateExpenseCategoryRequestDto categoryDto);
 
     @DeleteMapping("/expense/category/{id}")
+    @Tag(name = "Expense category")
     @Operation(summary = "Удаление категории расхода")
     ResponseEntity<Void> delete(@PathVariable("id") UUID id);
+
+    @GetMapping("/user/{id}/expense/categories")
+    @Tag(name = "User")
+    @Operation(summary = "Получение категорий расходов пользователя")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Информация о категориях",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = ExpenseCategoryPage.class))
+                    })
+    })
+    ResponseEntity<ExpenseCategoryPage> findAllByUserId(@PathVariable("id") UUID id, @RequestParam("page") int pageNumber);
 
 }

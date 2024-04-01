@@ -1,9 +1,13 @@
 package ru.itis.tracker.api.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import ru.itis.tracker.api.dto.expense.CreateExpenseRequestDto;
 import ru.itis.tracker.api.dto.expense.ExpenseDto;
+import ru.itis.tracker.api.dto.expense.ExpensePage;
 import ru.itis.tracker.api.dto.expense.UpdateExpenseRequestDto;
 import ru.itis.tracker.api.exception.NotFoundException;
 import ru.itis.tracker.api.mapper.ExpenseMapper;
@@ -22,6 +26,9 @@ public class ExpenseServiceImpl implements ExpenseService {
     private final ExpenseMapper expenseMapper;
     private final ExpenseCategoryService expenseCategoryService;
     private final UserService userService;
+
+    @Value(value = "${default.page-size}")
+    private int pageSize;
 
     @Override
     public ExpenseDto save(CreateExpenseRequestDto expenseDto) {
@@ -63,6 +70,18 @@ public class ExpenseServiceImpl implements ExpenseService {
         return expenseMapper.toDto(
                 expenseRepository.save(expense)
         );
+    }
+
+    @Override
+    public ExpensePage findAllByUserId(UUID userId, int pageNumber) {
+        PageRequest pageRequest = PageRequest.of(pageNumber, pageSize);
+        Page<Expense> page = expenseRepository.getAllByUserId(pageRequest, userId);
+
+        return ExpensePage.builder()
+                .elementsTotalCount(page.getNumberOfElements())
+                .pagesCount(page.getTotalPages())
+                .expenses(expenseMapper.toDtoList(page.getContent()))
+                .build();
     }
 
     private Expense getOrThrow(UUID id) {

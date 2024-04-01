@@ -20,6 +20,8 @@ public interface BankMapper {
     BankDto toDto(Bank bank);
 
     List<BankDto> toDtoList(List<Bank> banks);
+
+    List<BankAccountDto> toAccountDtoList(List<BankAccount> bankAccounts);
     
     @Mapping(target = "bankAccounts", ignore = true)
     UserDto toUserDto(User user);
