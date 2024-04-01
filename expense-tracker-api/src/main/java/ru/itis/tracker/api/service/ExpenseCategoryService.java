@@ -2,6 +2,7 @@ package ru.itis.tracker.api.service;
 
 import ru.itis.tracker.api.dto.expense.CreateExpenseCategoryDto;
 import ru.itis.tracker.api.dto.expense.ExpenseCategoryDto;
+import ru.itis.tracker.api.dto.expense.ExpenseCategoryPage;
 import ru.itis.tracker.api.dto.expense.UpdateExpenseCategoryRequestDto;
 import ru.itis.tracker.api.model.ExpenseCategory;
 
@@ -18,5 +19,7 @@ public interface ExpenseCategoryService {
     ExpenseCategoryDto update(UUID id, UpdateExpenseCategoryRequestDto categoryDto);
 
     void delete(UUID id);
+
+    ExpenseCategoryPage findAllByUserId(UUID id, int pageNumber);
 
 }

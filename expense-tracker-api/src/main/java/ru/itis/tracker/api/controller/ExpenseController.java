@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.itis.tracker.api.controller.api.ExpenseApi;
 import ru.itis.tracker.api.dto.expense.CreateExpenseRequestDto;
 import ru.itis.tracker.api.dto.expense.ExpenseDto;
+import ru.itis.tracker.api.dto.expense.ExpensePage;
 import ru.itis.tracker.api.dto.expense.UpdateExpenseRequestDto;
 import ru.itis.tracker.api.service.ExpenseService;
 
@@ -35,5 +36,12 @@ public class ExpenseController implements ExpenseApi {
     public ResponseEntity<ExpenseDto> update(UUID id, UpdateExpenseRequestDto expenseDto) {
         return ResponseEntity.accepted()
                 .body(expenseService.update(id, expenseDto));
+    }
+
+    @Override
+    public ResponseEntity<ExpensePage> findAllByUserId(UUID id, int pageNumber) {
+        return ResponseEntity.ok(
+                expenseService.findAllByUserId(id, pageNumber)
+        );
     }
 }

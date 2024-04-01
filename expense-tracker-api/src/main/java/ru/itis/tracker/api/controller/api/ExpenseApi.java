@@ -14,10 +14,10 @@ import ru.itis.tracker.api.dto.expense.*;
 
 import java.util.UUID;
 
-@Tag(name = "Expense")
 public interface ExpenseApi {
 
     @PostMapping("/expense")
+    @Tag(name = "Expense")
     @Operation(summary = "Добавление расхода")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Добавленный расход",
@@ -34,6 +34,7 @@ public interface ExpenseApi {
     ResponseEntity<ExpenseDto> add(@RequestBody @Valid CreateExpenseRequestDto expenseDto);
 
     @GetMapping("/expense/{id}")
+    @Tag(name = "Expense")
     @Operation(summary = "Получение информации о расходе")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Информация о расходе",
@@ -50,6 +51,7 @@ public interface ExpenseApi {
     ResponseEntity<ExpenseDto> findById(@PathVariable("id") UUID id);
 
     @PatchMapping("/expense/{id}")
+    @Tag(name = "Expense")
     @Operation(summary = "Обновление информации о расходе")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "202", description = "Обновленная информация о расходе",
@@ -65,4 +67,16 @@ public interface ExpenseApi {
 
     })
     ResponseEntity<ExpenseDto> update(@PathVariable("id") UUID id, @RequestBody @Valid UpdateExpenseRequestDto expenseDto);
+
+    @GetMapping("/user/{id}/expenses")
+    @Tag(name = "User")
+    @Operation(summary = "Получение расходов пользователя")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Информация о расходах",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = ExpensePage.class))
+                    })
+    })
+    ResponseEntity<ExpensePage> findAllByUserId(@PathVariable("id") UUID id, @RequestParam("page") int pageNumber);
 }

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.itis.tracker.api.controller.api.ExpenseCategoryApi;
 import ru.itis.tracker.api.dto.expense.CreateExpenseCategoryDto;
 import ru.itis.tracker.api.dto.expense.ExpenseCategoryDto;
+import ru.itis.tracker.api.dto.expense.ExpenseCategoryPage;
 import ru.itis.tracker.api.dto.expense.UpdateExpenseCategoryRequestDto;
 import ru.itis.tracker.api.service.ExpenseCategoryService;
 
@@ -41,5 +42,12 @@ public class ExpenseCategoryController implements ExpenseCategoryApi {
         expenseCategoryService.delete(id);
 
         return ResponseEntity.accepted().build();
+    }
+
+    @Override
+    public ResponseEntity<ExpenseCategoryPage> findAllByUserId(UUID id, int pageNumber) {
+        return ResponseEntity.ok(
+                expenseCategoryService.findAllByUserId(id, pageNumber)
+        );
     }
 }

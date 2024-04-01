@@ -7,7 +7,10 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.itis.tracker.api.controller.api.BankAccountApi;
 import ru.itis.tracker.api.dto.bank.AddBankAccountDto;
 import ru.itis.tracker.api.dto.bank.BankAccountDto;
+import ru.itis.tracker.api.dto.bank.BankAccountPage;
 import ru.itis.tracker.api.service.BankAccountService;
+
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,6 +22,13 @@ public class BankAccountController implements BankAccountApi {
     public ResponseEntity<BankAccountDto> findByAccountNumber(String number) {
         return ResponseEntity.ok(
                 bankAccountService.findByNumber(number)
+        );
+    }
+
+    @Override
+    public ResponseEntity<BankAccountPage> findAllByUserId(UUID id, int pageNumber) {
+        return ResponseEntity.ok(
+                bankAccountService.findAllByUserId(id, pageNumber)
         );
     }
 
