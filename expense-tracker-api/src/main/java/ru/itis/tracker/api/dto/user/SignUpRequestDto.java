@@ -18,20 +18,20 @@ import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
 @Schema(description = "Дто регистрации пользователя")
 public class SignUpRequestDto {
 
+    @Size(min = 1, max = 50, message = "{user.name.size}")
     @Schema(description = "Имя", example = "Harry", requiredMode = REQUIRED)
-    @Size(min = 1, max = 50)
     private String name;
 
-    @Size(min = 1, max = 50)
+    @Size(min = 1, max = 50, message = "{user.surname.size}")
     @Schema(description = "Фамилия", example = "Styles", requiredMode = REQUIRED)
     private String surname;
 
-    @Size(min = 1, max = 50)
-    @Email
+    @Size(min = 1, max = 50, message = "{user.email.size}")
+    @Email(message = "{user.email.regex}")
     @Schema(description = "Почта", example = "123@ok.com", requiredMode = REQUIRED)
     private String email;
 
-    @Size(min = 5, max = 20)
+    @Size(min = 5, max = 20, message = "{user.password.size}")
     @Schema(description = "Пароль", example = "123456789", requiredMode = REQUIRED)
     private String password;
 }

@@ -19,7 +19,7 @@ import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
 public class CreateExpenseRequestDto {
 
     @Schema(description = "Сумма расхода", example = "100", requiredMode = REQUIRED)
-    @Positive
+    @Positive(message = "{expenseRequest.amount.notPositive}")
     private Double amount;
 
     @Schema(description = "Id пользователя", requiredMode = REQUIRED)
