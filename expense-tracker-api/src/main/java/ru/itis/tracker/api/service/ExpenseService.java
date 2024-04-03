@@ -17,4 +17,6 @@ public interface ExpenseService {
 
     ExpensePage findAllByUserId(UUID userId, int pageNumber);
 
+    ExpensePage findAllByUserIdWithCurrencyConvert(UUID userId, int pageNumber, String code);
+
 }

@@ -37,3 +37,9 @@ jwt:
 
 default:
   page-size: 16
+
+api:
+  currency:
+    uri: https://api.currencybeacon.com/v1
+    key: ${CURRENCY_API_KEY}
+    enable: false
