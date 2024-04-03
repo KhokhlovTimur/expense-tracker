@@ -20,7 +20,7 @@ public class ExpenseDto {
     private UUID id;
 
     @Schema(description = "Сумма расхода", example = "100")
-    @Positive
+    @Positive(message = "{expense.amount.notPositive}")
     private Double amount;
 
     @Schema(description = "Пользователь")

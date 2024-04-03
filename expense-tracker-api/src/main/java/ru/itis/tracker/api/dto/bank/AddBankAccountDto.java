@@ -20,7 +20,7 @@ import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
 public class AddBankAccountDto {
 
     @Schema(description = "Номер счета", example = "11111111111111111111", requiredMode = REQUIRED)
-    @Size(min = 20, max = 20)
+    @Size(min = 20, max = 20, message = "{addBunkDto.accountNumber.size}")
     private String accountNumber;
 
     @Schema(description = "Id банка данного счета", requiredMode = REQUIRED)

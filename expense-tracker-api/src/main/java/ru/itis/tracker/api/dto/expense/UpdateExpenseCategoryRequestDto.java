@@ -18,11 +18,11 @@ import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
 public class UpdateExpenseCategoryRequestDto {
 
     @Schema(description = "Название категории", example = "Еда", requiredMode = REQUIRED)
-    @Size(min = 1, max = 50)
+    @Size(min = 1, max = 50, message = "{updateExpenseCategory.name.size}")
     private String name;
 
     @Schema(description = "Ежемесячный бюджет в рублях", example = "1000")
-    @Positive
+    @Positive(message = "{updateExpenseCategory.budget.notPositive}")
     private Integer budget;
 
 }

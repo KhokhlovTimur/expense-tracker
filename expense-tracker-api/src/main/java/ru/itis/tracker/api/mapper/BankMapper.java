@@ -29,12 +29,5 @@ public interface BankMapper {
     BankAccount toModel(AddBankAccountDto accountDto);
 
     List<BankAccountDto> toAccountDtoList(List<BankAccount> bankAccounts);
-    
-    @Mapping(target = "bankAccounts", ignore = true)
-    UserDto toUserDto(User user);
-
-    BankAccountDto toDto(BankAccount bankAccount);
-
-    BankAccount toModel(AddBankAccountDto accountDto);
 
 }

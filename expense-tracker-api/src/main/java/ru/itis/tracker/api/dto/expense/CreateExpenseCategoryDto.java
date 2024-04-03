@@ -23,10 +23,10 @@ public class CreateExpenseCategoryDto
     private UUID userId;
 
     @Schema(description = "Название категории", example = "Еда", requiredMode = REQUIRED)
-    @Size(min = 1, max = 50)
+    @Size(min = 1, max = 50, message = "{expenseCategory.name.size}")
     private String name;
 
     @Schema(description = "Ежемесячный бюджет в рублях", example = "1000")
-    @Positive
+    @Positive(message = "{expenseCategory.budget.notPositive}")
     private Integer budget;
 }
