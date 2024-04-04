@@ -28,6 +28,6 @@ public class CreateExpenseRequestDto {
     @Schema(description = "Id категории расхода", requiredMode = REQUIRED)
     private UUID categoryId;
 
-    @Schema(description = "Id валюты", requiredMode = REQUIRED)
-    private UUID currencyId;
+    @Schema(description = "Код валюты", example = "RUB", requiredMode = REQUIRED)
+    private String code;
 }

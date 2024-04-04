@@ -5,18 +5,24 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import ru.itis.tracker.api.dto.CurrencyDto;
 import ru.itis.tracker.api.dto.expense.CreateExpenseRequestDto;
 import ru.itis.tracker.api.dto.expense.ExpenseDto;
 import ru.itis.tracker.api.dto.expense.ExpensePage;
 import ru.itis.tracker.api.dto.expense.UpdateExpenseRequestDto;
 import ru.itis.tracker.api.exception.NotFoundException;
 import ru.itis.tracker.api.mapper.ExpenseMapper;
+import ru.itis.tracker.api.model.Currency;
 import ru.itis.tracker.api.model.Expense;
 import ru.itis.tracker.api.repository.ExpenseRepository;
+import ru.itis.tracker.api.service.currency.CurrencyConverter;
+import ru.itis.tracker.api.service.currency.CurrencyService;
 
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -26,6 +32,8 @@ public class ExpenseServiceImpl implements ExpenseService {
     private final ExpenseMapper expenseMapper;
     private final ExpenseCategoryService expenseCategoryService;
     private final UserService userService;
+    private final CurrencyService currencyService;
+    private final CurrencyConverter currencyConverter;
 
     @Value(value = "${default.page-size}")
     private int pageSize;
@@ -37,7 +45,7 @@ public class ExpenseServiceImpl implements ExpenseService {
         expense.setTime(Timestamp.from(Instant.now()));
         expense.setUser(userService.findModelById(expenseDto.getUserId()));
         expense.setCategory(expenseCategoryService.findModelById(expenseDto.getCategoryId()));
-//        expense.setCurrency(ccc);
+        expense.setCurrency(currencyService.findModelByCode(expenseDto.getCode()));
 
         return expenseMapper.toDto(
                 expenseRepository.save(expense)
@@ -63,8 +71,8 @@ public class ExpenseServiceImpl implements ExpenseService {
             expense.setCategory(expenseCategoryService.findModelById(expenseDto.getCategoryId()));
         }
 
-        if (expenseDto.getCurrencyId() != null) {
-//            expense.setCurrency();
+        if (expenseDto.getCode() != null) {
+            expense.setCurrency(currencyService.findModelByCode(expenseDto.getCode()));
         }
 
         return expenseMapper.toDto(
@@ -81,6 +89,27 @@ public class ExpenseServiceImpl implements ExpenseService {
                 .elementsTotalCount(page.getNumberOfElements())
                 .pagesCount(page.getTotalPages())
                 .expenses(expenseMapper.toDtoList(page.getContent()))
+                .build();
+    }
+
+    @Override
+    public ExpensePage findAllByUserIdWithCurrencyConvert(UUID userId, int pageNumber, String code) {
+        PageRequest pageRequest = PageRequest.of(pageNumber, pageSize);
+        Page<Expense> page = expenseRepository.getAllByUserId(pageRequest, userId);
+
+        List<ExpenseDto> expenses = page.getContent().stream()
+                .map(expenseMapper::toDto)
+                .peek(x -> {
+                    if (x.getCurrency() != null) {
+                        x.setAmount(currencyConverter.convert(x.getCurrency().getCode(), code, x.getAmount()));
+                        x.setCurrency(currencyService.findByCode(code));
+                    }
+                }).toList();
+
+        return ExpensePage.builder()
+                .elementsTotalCount(page.getNumberOfElements())
+                .pagesCount(page.getTotalPages())
+                .expenses(expenses)
                 .build();
     }
 

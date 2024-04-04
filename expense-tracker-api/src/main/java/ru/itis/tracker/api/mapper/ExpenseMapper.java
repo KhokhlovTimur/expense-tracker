@@ -9,7 +9,7 @@ import ru.itis.tracker.api.model.ExpenseCategory;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = UserMapper.class)
+@Mapper(componentModel = "spring", uses = {UserMapper.class, CurrencyMapper.class})
 public interface ExpenseMapper {
 
     ExpenseCategory toModel(CreateExpenseCategoryDto categoryDto);
@@ -26,7 +26,5 @@ public interface ExpenseMapper {
 
     List<ExpenseCategoryDto> toCategoryDtoList(List<ExpenseCategory> expenses);
 
-    //todo убрать
-    CurrencyDto map(Currency value);
 
 }

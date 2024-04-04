@@ -8,6 +8,7 @@ import lombok.Data;
 import ru.itis.tracker.api.dto.CurrencyDto;
 import ru.itis.tracker.api.dto.user.UserDto;
 
+import java.sql.Timestamp;
 import java.util.UUID;
 
 @Data
@@ -31,5 +32,8 @@ public class ExpenseDto {
 
     @Schema(description = "Валюта")
     private CurrencyDto currency;
+
+    @Schema(description = "Время добавления")
+    private Timestamp time;
 
 }

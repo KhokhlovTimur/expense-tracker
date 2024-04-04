@@ -44,4 +44,11 @@ public class ExpenseController implements ExpenseApi {
                 expenseService.findAllByUserId(id, pageNumber)
         );
     }
+
+    @Override
+    public ResponseEntity<ExpensePage> findAllByUserIdWithConvert(UUID id, int pageNumber, String code) {
+        return ResponseEntity.ok(
+                expenseService.findAllByUserIdWithCurrencyConvert(id, pageNumber, code)
+        );
+    }
 }

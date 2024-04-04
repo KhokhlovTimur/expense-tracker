@@ -79,4 +79,16 @@ public interface ExpenseApi {
                     })
     })
     ResponseEntity<ExpensePage> findAllByUserId(@PathVariable("id") UUID id, @RequestParam("page") int pageNumber);
+
+    @GetMapping("/user/{id}/expenses/convert")
+    @Tag(name = "User")
+    @Operation(summary = "Получение расходов пользователя с преобразованием в одну валюту")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Информация о расходах",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = ExpensePage.class))
+                    })
+    })
+    ResponseEntity<ExpensePage> findAllByUserIdWithConvert(@PathVariable("id") UUID id, @RequestParam("page") int pageNumber, @RequestParam("code") String code);
 }

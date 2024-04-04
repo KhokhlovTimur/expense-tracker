@@ -42,3 +42,4 @@ Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxQG9rLnJ1I
 }
 
 ###
+GET https://api.currencybeacon.com/v1/latest?api_key=PlMx1ixXjoI3R0XK0FdSwTXr5GxUV7sx
