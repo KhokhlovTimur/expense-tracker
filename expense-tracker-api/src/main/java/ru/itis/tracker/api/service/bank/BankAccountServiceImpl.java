@@ -15,6 +15,7 @@ import ru.itis.tracker.api.model.BankAccount;
 import ru.itis.tracker.api.model.User;
 import ru.itis.tracker.api.repository.BankAccountRepository;
 import ru.itis.tracker.api.service.UserService;
+import ru.itis.tracker.api.service.bank.dto.BankStatement;
 
 import java.util.UUID;
 
@@ -26,6 +27,7 @@ public class BankAccountServiceImpl implements BankAccountService {
     private final BankMapper bankMapper;
     private final BankService bankService;
     private final UserService userService;
+    private final BankApiService bankApiService;
 
     @Value(value = "${default.page-size}")
     private int pageSize;
@@ -75,6 +77,15 @@ public class BankAccountServiceImpl implements BankAccountService {
         userService.update(user);
 
         bankAccountRepository.delete(account);
+    }
+
+    @Override
+    public BankStatement getStatement(UUID bankId, String accountNumber) {
+        bankService.findModelById(bankId);
+        getOrThrow(accountNumber);
+
+        return bankApiService.getBankStatement(accountNumber, bankId)
+                .block();
     }
 
     private BankAccount getOrThrow(String number) {

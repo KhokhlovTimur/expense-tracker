@@ -9,6 +9,7 @@ import ru.itis.tracker.api.dto.bank.AddBankAccountDto;
 import ru.itis.tracker.api.dto.bank.BankAccountDto;
 import ru.itis.tracker.api.dto.bank.BankAccountPage;
 import ru.itis.tracker.api.service.bank.BankAccountService;
+import ru.itis.tracker.api.service.bank.dto.BankStatement;
 
 import java.util.UUID;
 
@@ -29,6 +30,13 @@ public class BankAccountController implements BankAccountApi {
     public ResponseEntity<BankAccountPage> findAllByUserId(UUID id, int pageNumber) {
         return ResponseEntity.ok(
                 bankAccountService.findAllByUserId(id, pageNumber)
+        );
+    }
+
+    @Override
+    public ResponseEntity<BankStatement> getStatement(String number, UUID id) {
+        return ResponseEntity.ok(
+                bankAccountService.getStatement(id, number)
         );
     }
 
