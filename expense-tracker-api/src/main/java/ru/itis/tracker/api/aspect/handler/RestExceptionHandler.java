@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import ru.itis.tracker.api.dto.ExceptionDto;
 import ru.itis.tracker.api.exception.AlreadyExistsException;
+import ru.itis.tracker.api.exception.BudgetExceedingException;
 import ru.itis.tracker.api.exception.NoAccessException;
 import ru.itis.tracker.api.exception.NotFoundException;
 
@@ -21,6 +22,11 @@ public class RestExceptionHandler {
 
     @ExceptionHandler(AlreadyExistsException.class)
     public ResponseEntity<ExceptionDto> handleAlreadyExistsException(AlreadyExistsException e) {
+        return createResponse(HttpStatus.CONFLICT, e);
+    }
+
+    @ExceptionHandler(BudgetExceedingException.class)
+    public ResponseEntity<ExceptionDto> handleBudgetExceedingException(BudgetExceedingException e) {
         return createResponse(HttpStatus.CONFLICT, e);
     }
 

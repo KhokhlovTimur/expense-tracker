@@ -28,6 +28,9 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private Set<BankAccount> bankAccounts;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
+    private Set<Expense> expenses;
+
     @JdbcTypeCode(SqlTypes.NAMED_ENUM)
     @Column(columnDefinition = "user_role_enum")
     private Role role;

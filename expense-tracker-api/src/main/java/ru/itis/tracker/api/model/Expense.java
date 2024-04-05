@@ -23,7 +23,7 @@ public class Expense {
     @Temporal(TemporalType.TIMESTAMP)
     private Timestamp time;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "user_id")
     private User user;
 
