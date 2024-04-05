@@ -13,7 +13,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 @Schema(description = "Расход из банка")
-public class BankExpenseApiResponseDto {
+public class BankExpenseApiDto {
 
     @Schema(description = "Id расхода")
     private UUID id;

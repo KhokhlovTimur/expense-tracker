@@ -13,5 +13,5 @@ import java.util.List;
 @Schema(description = "Информация о расходах из банка")
 public class BankStatement {
 
-    private List<BankExpenseApiResponseDto> expenses;
+    private List<BankExpenseApiDto> expenses;
 }
