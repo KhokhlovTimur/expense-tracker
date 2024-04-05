@@ -14,4 +14,5 @@ import java.util.List;
 public class BankStatement {
 
     private List<BankExpenseApiDto> expenses;
+    private String number;
 }

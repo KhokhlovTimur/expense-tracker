@@ -16,8 +16,6 @@ public class BankExpenseApiDto {
 
     private UUID id;
 
-    private UUID userId;
-
     private Double amount;
 
     private Timestamp time;
