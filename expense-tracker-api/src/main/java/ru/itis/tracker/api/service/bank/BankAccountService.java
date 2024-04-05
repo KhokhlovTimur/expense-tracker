@@ -1,4 +1,4 @@
-package ru.itis.tracker.api.service;
+package ru.itis.tracker.api.service.bank;
 
 import ru.itis.tracker.api.dto.bank.AddBankAccountDto;
 import ru.itis.tracker.api.dto.bank.BankAccountDto;
@@ -13,5 +13,7 @@ public interface BankAccountService {
     BankAccountDto findByNumber(String number);
 
     BankAccountPage findAllByUserId(UUID id, int pageNumber);
+
+    void delete(UUID userId, String number);
 
 }

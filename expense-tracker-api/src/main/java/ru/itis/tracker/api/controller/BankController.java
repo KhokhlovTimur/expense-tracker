@@ -9,7 +9,7 @@ import ru.itis.tracker.api.dto.bank.BankDto;
 import ru.itis.tracker.api.dto.bank.BanksPage;
 import ru.itis.tracker.api.dto.bank.CreateBankRequestDto;
 import ru.itis.tracker.api.dto.bank.UpdateBankRequestDto;
-import ru.itis.tracker.api.service.BankService;
+import ru.itis.tracker.api.service.bank.BankService;
 
 import java.util.UUID;
 

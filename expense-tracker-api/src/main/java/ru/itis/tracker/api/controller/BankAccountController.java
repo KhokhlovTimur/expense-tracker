@@ -8,7 +8,7 @@ import ru.itis.tracker.api.controller.api.BankAccountApi;
 import ru.itis.tracker.api.dto.bank.AddBankAccountDto;
 import ru.itis.tracker.api.dto.bank.BankAccountDto;
 import ru.itis.tracker.api.dto.bank.BankAccountPage;
-import ru.itis.tracker.api.service.BankAccountService;
+import ru.itis.tracker.api.service.bank.BankAccountService;
 
 import java.util.UUID;
 
@@ -30,6 +30,13 @@ public class BankAccountController implements BankAccountApi {
         return ResponseEntity.ok(
                 bankAccountService.findAllByUserId(id, pageNumber)
         );
+    }
+
+    @Override
+    public ResponseEntity<Void> delete(UUID id, String number) {
+        bankAccountService.delete(id, number);
+        return ResponseEntity.status(HttpStatus.ACCEPTED)
+                .build();
     }
 
     @Override

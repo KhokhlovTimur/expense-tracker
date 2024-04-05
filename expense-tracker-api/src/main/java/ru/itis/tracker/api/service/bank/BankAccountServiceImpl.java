@@ -1,4 +1,4 @@
-package ru.itis.tracker.api.service;
+package ru.itis.tracker.api.service.bank;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,7 +12,9 @@ import ru.itis.tracker.api.exception.AlreadyExistsException;
 import ru.itis.tracker.api.exception.NotFoundException;
 import ru.itis.tracker.api.mapper.BankMapper;
 import ru.itis.tracker.api.model.BankAccount;
+import ru.itis.tracker.api.model.User;
 import ru.itis.tracker.api.repository.BankAccountRepository;
+import ru.itis.tracker.api.service.UserService;
 
 import java.util.UUID;
 
@@ -62,6 +64,17 @@ public class BankAccountServiceImpl implements BankAccountService {
                 .elementsTotalCount(accounts.getNumberOfElements())
                 .pagesCount(accounts.getTotalPages())
                 .build();
+    }
+
+    @Override
+    public void delete(UUID userId, String number) {
+        BankAccount account = getOrThrow(number);
+
+        User user = account.getUser();
+        user.getBankAccounts().remove(account);
+        userService.update(user);
+
+        bankAccountRepository.delete(account);
     }
 
     private BankAccount getOrThrow(String number) {

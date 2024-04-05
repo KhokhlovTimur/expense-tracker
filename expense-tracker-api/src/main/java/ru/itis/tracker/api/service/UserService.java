@@ -12,4 +12,6 @@ public interface UserService {
     User findModelById(UUID id);
 
     UserDto findById(UUID id);
+
+    void update(User user);
 }

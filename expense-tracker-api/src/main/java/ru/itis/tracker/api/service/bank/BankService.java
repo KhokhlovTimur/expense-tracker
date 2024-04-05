@@ -1,4 +1,4 @@
-package ru.itis.tracker.api.service;
+package ru.itis.tracker.api.service.bank;
 
 import ru.itis.tracker.api.dto.bank.BankDto;
 import ru.itis.tracker.api.dto.bank.BanksPage;

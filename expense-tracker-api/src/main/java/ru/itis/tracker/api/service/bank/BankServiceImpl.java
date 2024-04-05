@@ -1,4 +1,4 @@
-package ru.itis.tracker.api.service;
+package ru.itis.tracker.api.service.bank;
 
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;

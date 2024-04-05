@@ -65,4 +65,9 @@ public interface BankAccountApi {
     })
     ResponseEntity<BankAccountPage> findAllByUserId(@PathVariable("id") UUID id, @RequestParam("page") int pageNumber);
 
+    @DeleteMapping("/user/{id}/accounts")
+    @Tag(name = "User")
+    @Operation(summary = "Удаление счета")
+    ResponseEntity<Void> delete(@PathVariable("id") UUID id, @RequestParam("number") String number);
+
 }
