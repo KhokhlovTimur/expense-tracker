@@ -7,6 +7,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import ru.itis.tracker.api.dto.expense.*;
 import ru.itis.tracker.api.exception.BudgetExceedingException;
+import ru.itis.tracker.api.exception.DateRangeException;
 import ru.itis.tracker.api.exception.NotFoundException;
 import ru.itis.tracker.api.mapper.ExpenseMapper;
 import ru.itis.tracker.api.model.Expense;
@@ -124,12 +125,19 @@ public class ExpenseServiceImpl implements ExpenseService {
 
     @Override
     public ExpenseRangeResponseDto findAllBetween(UUID userId, ExpenseRangeRequestDto req) {
+        LocalDate from = LocalDate.parse(req.getFrom());
+        LocalDate to = LocalDate.parse(req.getTo());
+
+        if (from.isAfter(to)) {
+            throw new DateRangeException(String.format("Дата [%s] не может быть раньше [%s]", from, to));
+        }
+
         List<ExpenseDto> expenses = userService.findModelById(userId).getExpenses()
                 .stream()
-                .filter(x -> x.getTime().toLocalDateTime().toLocalDate().isAfter(LocalDate.parse(req.getFrom()))
-                        && x.getTime().toLocalDateTime().toLocalDate().isBefore(LocalDate.parse(req.getTo()))
-                        || x.getTime().toLocalDateTime().toLocalDate().isEqual(LocalDate.parse(req.getTo()))
-                        || x.getTime().toLocalDateTime().toLocalDate().isEqual(LocalDate.parse(req.getFrom())))
+                .filter(x -> x.getTime().toLocalDateTime().toLocalDate().isAfter(from)
+                        && x.getTime().toLocalDateTime().toLocalDate().isBefore(to)
+                        || x.getTime().toLocalDateTime().toLocalDate().isEqual(to)
+                        || x.getTime().toLocalDateTime().toLocalDate().isEqual(from))
                 .map(expenseMapper::toDto)
                 .toList();
 

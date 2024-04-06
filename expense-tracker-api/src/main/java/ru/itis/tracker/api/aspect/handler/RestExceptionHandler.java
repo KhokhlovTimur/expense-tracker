@@ -32,6 +32,11 @@ public class RestExceptionHandler {
         return createResponse(HttpStatus.SERVICE_UNAVAILABLE, e);
     }
 
+    @ExceptionHandler(DateRangeException.class)
+    public ResponseEntity<ExceptionDto> handleDateRangeException(DateRangeException e) {
+        return createResponse(HttpStatus.SERVICE_UNAVAILABLE, e);
+    }
+
     @ExceptionHandler(NoAccessException.class)
     public ResponseEntity<ExceptionDto> handleNoAccessException(NoAccessException e) {
         return createResponse(HttpStatus.FORBIDDEN, e);
