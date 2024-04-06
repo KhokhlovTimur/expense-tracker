@@ -91,4 +91,16 @@ public interface ExpenseApi {
                     })
     })
     ResponseEntity<ExpensePage> findAllByUserIdWithConvert(@PathVariable("id") UUID id, @RequestParam("page") int pageNumber, @RequestParam("code") String code);
+
+    @GetMapping("/user/{id}/expenses/range")
+    @Tag(name = "User")
+    @Operation(summary = "Получение расходов пользователя в интервале времени")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Информация о расходах",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = ExpenseRangeResponseDto.class))
+                    })
+    })
+    ResponseEntity<ExpenseRangeResponseDto> findAllByUserIdBetween(@PathVariable("id") UUID id, @Valid @ModelAttribute ExpenseRangeRequestDto req);
 }

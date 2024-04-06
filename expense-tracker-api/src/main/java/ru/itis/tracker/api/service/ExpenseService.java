@@ -1,9 +1,6 @@
 package ru.itis.tracker.api.service;
 
-import ru.itis.tracker.api.dto.expense.CreateExpenseRequestDto;
-import ru.itis.tracker.api.dto.expense.ExpenseDto;
-import ru.itis.tracker.api.dto.expense.ExpensePage;
-import ru.itis.tracker.api.dto.expense.UpdateExpenseRequestDto;
+import ru.itis.tracker.api.dto.expense.*;
 
 import java.util.UUID;
 
@@ -18,5 +15,7 @@ public interface ExpenseService {
     ExpensePage findAllByUserId(UUID userId, int pageNumber);
 
     ExpensePage findAllByUserIdWithCurrencyConvert(UUID userId, int pageNumber, String code);
+
+    ExpenseRangeResponseDto findAllBetween(UUID userId, ExpenseRangeRequestDto req);
 
 }

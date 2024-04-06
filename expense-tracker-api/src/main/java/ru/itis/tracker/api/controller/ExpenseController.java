@@ -5,10 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import ru.itis.tracker.api.controller.api.ExpenseApi;
-import ru.itis.tracker.api.dto.expense.CreateExpenseRequestDto;
-import ru.itis.tracker.api.dto.expense.ExpenseDto;
-import ru.itis.tracker.api.dto.expense.ExpensePage;
-import ru.itis.tracker.api.dto.expense.UpdateExpenseRequestDto;
+import ru.itis.tracker.api.dto.expense.*;
 import ru.itis.tracker.api.service.ExpenseService;
 
 import java.util.UUID;
@@ -49,6 +46,13 @@ public class ExpenseController implements ExpenseApi {
     public ResponseEntity<ExpensePage> findAllByUserIdWithConvert(UUID id, int pageNumber, String code) {
         return ResponseEntity.ok(
                 expenseService.findAllByUserIdWithCurrencyConvert(id, pageNumber, code)
+        );
+    }
+
+    @Override
+    public ResponseEntity<ExpenseRangeResponseDto> findAllByUserIdBetween(UUID id, ExpenseRangeRequestDto req) {
+        return ResponseEntity.ok(
+                expenseService.findAllBetween(id, req)
         );
     }
 }

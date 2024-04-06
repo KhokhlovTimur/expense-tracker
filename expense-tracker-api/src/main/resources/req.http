@@ -42,4 +42,7 @@ Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxQG9rLnJ1I
 }
 
 ###
-GET https://api.currencybeacon.com/v1/latest?api_key=PlMx1ixXjoI3R0XK0FdSwTXr5GxUV7sx
+GET http://localhost:8080/api/user/ea21c1da-0fa6-4728-9816-1a1bd2f3554a/expenses/range?from=2024-04-03&to=2024-04-05
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxQG9rLnJ1Iiwicm9sZSI6IlVTRVIiLCJpc3MiOiIvYXBpL2F1dGgvdG9rZW4iLCJleHAiOjE3MTI0MDM4Mjh9.7uog_RLKkOQc2aAqy-ngkauE68AvzJHJVp2ChN-jfvE
+

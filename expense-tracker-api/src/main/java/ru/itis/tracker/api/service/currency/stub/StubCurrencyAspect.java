@@ -25,7 +25,7 @@ public class StubCurrencyAspect {
     }
 
     //Подставляет валюту в ответ, если нет подключения к апи
-    @Around("execution(* ru.itis.tracker.api.service.ExpenseServiceImpl.*(..))")
+    @Around("execution(* ru.itis.tracker.api.service.ExpenseServiceImpl.findAllByUserId(..))")
     public Object logAfterAllMethods(ProceedingJoinPoint joinPoint) throws Throwable {
 
         log.info("Валюты дописались");

@@ -5,15 +5,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import ru.itis.tracker.api.dto.CurrencyDto;
-import ru.itis.tracker.api.dto.expense.CreateExpenseRequestDto;
-import ru.itis.tracker.api.dto.expense.ExpenseDto;
-import ru.itis.tracker.api.dto.expense.ExpensePage;
-import ru.itis.tracker.api.dto.expense.UpdateExpenseRequestDto;
+import ru.itis.tracker.api.dto.expense.*;
 import ru.itis.tracker.api.exception.BudgetExceedingException;
 import ru.itis.tracker.api.exception.NotFoundException;
 import ru.itis.tracker.api.mapper.ExpenseMapper;
-import ru.itis.tracker.api.model.Currency;
 import ru.itis.tracker.api.model.Expense;
 import ru.itis.tracker.api.model.ExpenseCategory;
 import ru.itis.tracker.api.model.User;
@@ -24,11 +19,8 @@ import ru.itis.tracker.api.service.currency.CurrencyService;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -126,6 +118,22 @@ public class ExpenseServiceImpl implements ExpenseService {
         return ExpensePage.builder()
                 .elementsTotalCount(page.getNumberOfElements())
                 .pagesCount(page.getTotalPages())
+                .expenses(expenses)
+                .build();
+    }
+
+    @Override
+    public ExpenseRangeResponseDto findAllBetween(UUID userId, ExpenseRangeRequestDto req) {
+        List<ExpenseDto> expenses = userService.findModelById(userId).getExpenses()
+                .stream()
+                .filter(x -> x.getTime().toLocalDateTime().toLocalDate().isAfter(LocalDate.parse(req.getFrom()))
+                        && x.getTime().toLocalDateTime().toLocalDate().isBefore(LocalDate.parse(req.getTo()))
+                        || x.getTime().toLocalDateTime().toLocalDate().isEqual(LocalDate.parse(req.getTo()))
+                        || x.getTime().toLocalDateTime().toLocalDate().isEqual(LocalDate.parse(req.getFrom())))
+                .map(expenseMapper::toDto)
+                .toList();
+
+        return ExpenseRangeResponseDto.builder()
                 .expenses(expenses)
                 .build();
     }
