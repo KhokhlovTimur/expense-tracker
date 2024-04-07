@@ -1,0 +1,17 @@
+version: "3.9"
+services:
+  postgres:
+    image: postgres:13.3
+    environment:
+      POSTGRES_DB: "bank_service"
+      POSTGRES_USER: "developer"
+      POSTGRES_PASSWORD: "developer"
+    ports:
+      - "5432:5432"
+  bank:
+    image: service
+    ports:
+      - "8082:8082"
+    restart: on-failure
+    depends_on:
+      - postgres
