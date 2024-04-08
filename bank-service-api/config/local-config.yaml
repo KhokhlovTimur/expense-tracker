@@ -1,0 +1,3 @@
+storage_path: "postgresql://developer:developer@localhost:5432/bank_service"
+http_server:
+  address: "localhost:8082"
