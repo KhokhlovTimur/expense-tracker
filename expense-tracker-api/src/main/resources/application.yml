@@ -44,4 +44,4 @@ api:
     key: ${CURRENCY_API_KEY}
     enable: false
   bank:
-    uri: ${BANKS_API_URI:https://localhost:8081}
+    uri: ${BANKS_API_URI:http://localhost:8082}

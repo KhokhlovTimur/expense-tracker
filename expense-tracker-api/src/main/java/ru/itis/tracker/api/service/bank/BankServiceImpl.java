@@ -53,6 +53,12 @@ public class BankServiceImpl implements BankService {
     }
 
     @Override
+    public Bank findModelByName(String name) {
+        return bankRepository.findByName(name)
+                .orElseThrow(() -> new NotFoundException(String.format("Банка с названием [%s] не существует", name)));
+    }
+
+    @Override
     public BankDto save(CreateBankRequestDto bankDto) {
         new UniqueCheckBuilder(bankDto)
                 .bic()

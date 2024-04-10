@@ -66,7 +66,7 @@ public interface BankAccountApi {
     })
     ResponseEntity<BankAccountPage> findAllByUserId(@PathVariable("id") UUID id, @RequestParam("page") int pageNumber);
 
-    @GetMapping("/bank/{bank_id}/accounts/{account_number}")
+    @GetMapping("/banks/accounts/{account_number}")
     @Tag(name = "Bank account")
     @Operation(summary = "Получение выписки из банка")
     @ApiResponses(value = {
@@ -76,7 +76,7 @@ public interface BankAccountApi {
                                     schema = @Schema(implementation = BankStatement.class))
                     })
     })
-    ResponseEntity<BankStatement> getStatement(@PathVariable("account_number") String number, @PathVariable("bank_id") UUID id);
+    ResponseEntity<BankStatement> getStatement(@PathVariable("account_number") String number);
 
     @DeleteMapping("/user/{id}/accounts")
     @Tag(name = "User")

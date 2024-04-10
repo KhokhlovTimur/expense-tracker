@@ -11,6 +11,7 @@ import ru.itis.tracker.api.dto.bank.BankAccountPage;
 import ru.itis.tracker.api.exception.AlreadyExistsException;
 import ru.itis.tracker.api.exception.NotFoundException;
 import ru.itis.tracker.api.mapper.BankMapper;
+import ru.itis.tracker.api.model.Bank;
 import ru.itis.tracker.api.model.BankAccount;
 import ru.itis.tracker.api.model.User;
 import ru.itis.tracker.api.repository.BankAccountRepository;
@@ -80,11 +81,10 @@ public class BankAccountServiceImpl implements BankAccountService {
     }
 
     @Override
-    public BankStatement getStatement(UUID bankId, String accountNumber) {
-        bankService.findModelById(bankId);
-        getOrThrow(accountNumber);
-
-        return bankApiService.getBankStatement(accountNumber, bankId)
+    public BankStatement getStatement(String accountNumber) {
+        BankAccount acc = getOrThrow(accountNumber);
+        Bank bank = bankService.findModelById(acc.getBank().getId());
+        return bankApiService.getBankStatement(accountNumber, bank.getId())
                 .block();
     }
 

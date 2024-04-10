@@ -17,14 +17,13 @@ public class BankApiDispatcher implements BankApiService {
     private final WebClient banksWebClient;
 
     @Override
-    public Mono<BankStatement> getBankStatement(String accountNumber, UUID bankId) {
+    public Mono<BankStatement> getBankStatement(String accountNumber, UUID id) {
 
         return banksWebClient
                 .get()
-                .uri(String.format("/bank/%s/account/%s", bankId, accountNumber))
+                .uri(String.format("/bank/%s/account/%s", id, accountNumber))
                 .retrieve()
                 .bodyToMono(BankStatement.class)
-                .timeout(Duration.ofMillis(10000))
-                .onErrorResume(e -> Mono.error(new BankApiException("В api банков сбой.")));
+                .timeout(Duration.ofMillis(10000));
     }
 }

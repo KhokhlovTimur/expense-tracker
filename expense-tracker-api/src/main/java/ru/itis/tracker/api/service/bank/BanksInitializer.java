@@ -14,6 +14,7 @@ import ru.itis.tracker.api.repository.BankRepository;
 
 import java.time.Duration;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @Component
 @RequiredArgsConstructor
@@ -24,6 +25,7 @@ public class BanksInitializer {
     private final BankRepository bankRepository;
     private final ExecutorService executorService;
     private final BankMapper bankMapper;
+    private final AtomicBoolean isInitialized = new AtomicBoolean(false);
 
     @PostConstruct
     public void init() {
@@ -32,6 +34,11 @@ public class BanksInitializer {
 
     @Scheduled(cron = "@daily")
     public void updateBanks() {
+
+        if (isInitialized.get()) {
+            return;
+        }
+
         banksWebClient
                 .get()
                 .uri("/banks")
@@ -42,10 +49,11 @@ public class BanksInitializer {
 
                 .subscribeOn(Schedulers.fromExecutorService(executorService))
                 .subscribe(res -> {
-                    res.getBankAccounts().stream()
+                    res.getBanks().stream()
                             .map(bankMapper::toModel)
                             .forEach(bankRepository::save);
 
+                    isInitialized.set(true);
                     log.info("Banks have been initialized");
                 });
     }

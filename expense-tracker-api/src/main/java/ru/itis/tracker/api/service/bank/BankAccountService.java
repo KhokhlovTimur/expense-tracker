@@ -17,6 +17,6 @@ public interface BankAccountService {
 
     void delete(UUID userId, String number);
 
-    BankStatement getStatement(UUID bankId, String accountNumber);
+    BankStatement getStatement(String accountNumber);
 
 }

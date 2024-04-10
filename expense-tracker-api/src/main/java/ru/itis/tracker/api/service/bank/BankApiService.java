@@ -7,6 +7,6 @@ import java.util.UUID;
 
 public interface BankApiService {
 
-    Mono<BankStatement> getBankStatement(String accountNumber, UUID bankId);
+    Mono<BankStatement> getBankStatement(String accountNumber,  UUID id);
 
 }

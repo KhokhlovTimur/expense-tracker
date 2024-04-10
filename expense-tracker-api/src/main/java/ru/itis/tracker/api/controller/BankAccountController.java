@@ -34,9 +34,9 @@ public class BankAccountController implements BankAccountApi {
     }
 
     @Override
-    public ResponseEntity<BankStatement> getStatement(String number, UUID id) {
+    public ResponseEntity<BankStatement> getStatement(String number) {
         return ResponseEntity.ok(
-                bankAccountService.getStatement(id, number)
+                bankAccountService.getStatement(number)
         );
     }
 

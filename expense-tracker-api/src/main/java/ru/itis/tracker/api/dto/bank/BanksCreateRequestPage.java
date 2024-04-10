@@ -12,5 +12,5 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class BanksCreateRequestPage {
-    private List<BankDto> bankAccounts;
+    private List<BankDto> banks;
 }

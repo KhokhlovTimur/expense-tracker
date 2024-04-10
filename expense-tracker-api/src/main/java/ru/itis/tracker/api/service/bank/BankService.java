@@ -18,6 +18,8 @@ public interface BankService {
 
     Bank findModelById(UUID id);
 
+    Bank findModelByName(String name);
+
     BanksPage findAll(int pageNumber);
 
 }
