@@ -1,4 +1,4 @@
-package ru.itis.tracker.api.service;
+package ru.itis.tracker.api.service.bank;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,8 +11,12 @@ import ru.itis.tracker.api.dto.bank.BankAccountPage;
 import ru.itis.tracker.api.exception.AlreadyExistsException;
 import ru.itis.tracker.api.exception.NotFoundException;
 import ru.itis.tracker.api.mapper.BankMapper;
+import ru.itis.tracker.api.model.Bank;
 import ru.itis.tracker.api.model.BankAccount;
+import ru.itis.tracker.api.model.User;
 import ru.itis.tracker.api.repository.BankAccountRepository;
+import ru.itis.tracker.api.service.UserService;
+import ru.itis.tracker.api.service.bank.dto.BankStatement;
 
 import java.util.UUID;
 
@@ -24,6 +28,7 @@ public class BankAccountServiceImpl implements BankAccountService {
     private final BankMapper bankMapper;
     private final BankService bankService;
     private final UserService userService;
+    private final BankApiService bankApiService;
 
     @Value(value = "${default.page-size}")
     private int pageSize;
@@ -62,6 +67,25 @@ public class BankAccountServiceImpl implements BankAccountService {
                 .elementsTotalCount(accounts.getNumberOfElements())
                 .pagesCount(accounts.getTotalPages())
                 .build();
+    }
+
+    @Override
+    public void delete(UUID userId, String number) {
+        BankAccount account = getOrThrow(number);
+
+        User user = account.getUser();
+        user.getBankAccounts().remove(account);
+        userService.update(user);
+
+        bankAccountRepository.delete(account);
+    }
+
+    @Override
+    public BankStatement getStatement(String accountNumber) {
+        BankAccount acc = getOrThrow(accountNumber);
+        Bank bank = bankService.findModelById(acc.getBank().getId());
+        return bankApiService.getBankStatement(accountNumber, bank.getId())
+                .block();
     }
 
     private BankAccount getOrThrow(String number) {

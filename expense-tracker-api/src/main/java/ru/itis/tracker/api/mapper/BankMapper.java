@@ -17,6 +17,8 @@ public interface BankMapper {
 
     Bank toModel(UpdateBankRequestDto bankDto);
 
+    Bank toModel(BankDto bankDto);
+
     BankDto toDto(Bank bank);
 
     List<BankDto> toDtoList(List<Bank> banks);

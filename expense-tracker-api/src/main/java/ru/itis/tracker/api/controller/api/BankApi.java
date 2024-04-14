@@ -21,7 +21,7 @@ import java.util.UUID;
 public interface BankApi {
 
     @PostMapping("/bank")
-    @Operation(summary = "Добавление банка")
+    @Operation(summary = "Добавление банка", hidden = true)
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Добавленный банк",
                     content = {
@@ -37,7 +37,7 @@ public interface BankApi {
     ResponseEntity<BankDto> save(@RequestBody @Valid CreateBankRequestDto bankDto);
 
     @PatchMapping("/bank/{id}")
-    @Operation(summary = "Обновление информации о банке")
+    @Operation(summary = "Обновление информации о банке", hidden = true)
     @ApiResponses(value = {
             @ApiResponse(responseCode = "202", description = "Обновленная информация",
                     content = {

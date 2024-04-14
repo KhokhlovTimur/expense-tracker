@@ -1,4 +1,4 @@
-package ru.itis.tracker.api.service;
+package ru.itis.tracker.api.service.bank;
 
 import ru.itis.tracker.api.dto.bank.BankDto;
 import ru.itis.tracker.api.dto.bank.BanksPage;
@@ -17,6 +17,8 @@ public interface BankService {
     BankDto findById(UUID id);
 
     Bank findModelById(UUID id);
+
+    Bank findModelByName(String name);
 
     BanksPage findAll(int pageNumber);
 

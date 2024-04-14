@@ -1,4 +1,4 @@
-package ru.itis.tracker.api.service;
+package ru.itis.tracker.api.service.bank;
 
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -50,6 +50,12 @@ public class BankServiceImpl implements BankService {
     @Override
     public Bank findModelById(UUID id) {
         return getOrThrow(id);
+    }
+
+    @Override
+    public Bank findModelByName(String name) {
+        return bankRepository.findByName(name)
+                .orElseThrow(() -> new NotFoundException(String.format("Банка с названием [%s] не существует", name)));
     }
 
     @Override

@@ -43,3 +43,5 @@ api:
     uri: https://api.currencybeacon.com/v1
     key: ${CURRENCY_API_KEY}
     enable: false
+  bank:
+    uri: ${BANKS_API_URI:http://localhost:8082}

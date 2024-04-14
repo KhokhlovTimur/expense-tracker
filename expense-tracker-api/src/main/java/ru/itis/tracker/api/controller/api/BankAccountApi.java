@@ -13,6 +13,7 @@ import ru.itis.tracker.api.dto.ExceptionDto;
 import ru.itis.tracker.api.dto.bank.AddBankAccountDto;
 import ru.itis.tracker.api.dto.bank.BankAccountDto;
 import ru.itis.tracker.api.dto.bank.BankAccountPage;
+import ru.itis.tracker.api.service.bank.dto.BankStatement;
 
 import java.util.UUID;
 
@@ -64,5 +65,22 @@ public interface BankAccountApi {
                     })
     })
     ResponseEntity<BankAccountPage> findAllByUserId(@PathVariable("id") UUID id, @RequestParam("page") int pageNumber);
+
+    @GetMapping("/banks/accounts/{account_number}")
+    @Tag(name = "Bank account")
+    @Operation(summary = "Получение выписки из банка")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Информация о счетах",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = BankStatement.class))
+                    })
+    })
+    ResponseEntity<BankStatement> getStatement(@PathVariable("account_number") String number);
+
+    @DeleteMapping("/user/{id}/accounts")
+    @Tag(name = "User")
+    @Operation(summary = "Удаление счета")
+    ResponseEntity<Void> delete(@PathVariable("id") UUID id, @RequestParam("number") String number);
 
 }

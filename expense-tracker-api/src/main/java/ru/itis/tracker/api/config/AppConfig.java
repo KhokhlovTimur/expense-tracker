@@ -21,7 +21,8 @@ public class AppConfig {
 
     @Value(value = "${api.currency.uri}")
     private String currencyApiUri;
-
+    @Value(value = "${api.bank.uri}")
+    private String bankApiUri;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -34,7 +35,6 @@ public class AppConfig {
     }
 
     @Bean
-    @ConditionalOnProperty(name = "api.currency.enable", havingValue = "true")
     public ExecutorService executorService() {
         return new ThreadPoolExecutor(10, 10, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>(20));
     }
@@ -44,6 +44,13 @@ public class AppConfig {
     public WebClient webClient() {
         return WebClient.builder()
                 .baseUrl(currencyApiUri)
+                .build();
+    }
+
+    @Bean(name = "banksWebClient")
+    public WebClient banksWebClient() {
+        return WebClient.builder()
+                .baseUrl(bankApiUri)
                 .build();
     }
 }
