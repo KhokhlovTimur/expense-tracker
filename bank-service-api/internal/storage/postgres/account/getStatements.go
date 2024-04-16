@@ -57,7 +57,7 @@ func extractStatements(rows pgx.Rows) ([]model.Statement, error) {
 		statements = append(statements, model.Statement{
 			Amount: cost / 100,
 			Name:   name,
-			Time:   paymentTime.String(),
+			Time:   paymentTime.Format("2006-01-02 15:04:05"),
 		})
 	}
 	return statements, nil

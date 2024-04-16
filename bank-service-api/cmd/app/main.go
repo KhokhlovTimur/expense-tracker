@@ -45,7 +45,7 @@ func main() {
 
 	router := chi.NewRouter()
 
-	router.Get("/bank/{bank_id}/account/{acc_id}", statementHandler.New(ctx, accService))
+	router.Get("/bank/{bank_name}/account/{acc_id}", statementHandler.New(ctx, accService))
 	router.Get("/banks", bankHandler.New(ctx, bankService))
 
 	httpServer := &http.Server{
