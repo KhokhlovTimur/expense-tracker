@@ -8,6 +8,10 @@ public interface ExpenseService {
 
     ExpenseDto save(CreateExpenseRequestDto expenseDto);
 
+    void deleteById(UUID id);
+
+    ExpenseDto updateFully(UUID id, UpdateExpenseRequestDto expenseDto);
+
     ExpenseDto findById(UUID id);
 
     ExpenseDto update(UUID id, UpdateExpenseRequestDto expenseDto);

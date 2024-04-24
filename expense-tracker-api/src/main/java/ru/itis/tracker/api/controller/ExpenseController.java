@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.itis.tracker.api.controller.api.ExpenseApi;
 import ru.itis.tracker.api.dto.expense.*;
 import ru.itis.tracker.api.service.ExpenseService;
+import ru.itis.tracker.api.service.ExpenseServiceImpl;
 
 import java.util.UUID;
 
@@ -15,6 +16,7 @@ import java.util.UUID;
 public class ExpenseController implements ExpenseApi {
 
     private final ExpenseService expenseService;
+    private final ExpenseServiceImpl expenseServiceImpl;
 
     @Override
     public ResponseEntity<ExpenseDto> add(CreateExpenseRequestDto expenseDto) {
@@ -30,7 +32,20 @@ public class ExpenseController implements ExpenseApi {
     }
 
     @Override
-    public ResponseEntity<ExpenseDto> update(UUID id, UpdateExpenseRequestDto expenseDto) {
+    public ResponseEntity<ExpenseDto> updateFully(UUID id, UpdateExpenseRequestDto expenseDto) {
+        return ResponseEntity.accepted()
+                .body(expenseService.updateFully(id, expenseDto));
+    }
+
+    @Override
+    public ResponseEntity<Void> delete(UUID id) {
+        expenseServiceImpl.deleteById(id);
+        return ResponseEntity.status(HttpStatus.ACCEPTED)
+                .body(null);
+    }
+
+    @Override
+    public ResponseEntity<ExpenseDto> updatePart(UUID id, UpdateExpenseRequestDto expenseDto) {
         return ResponseEntity.accepted()
                 .body(expenseService.update(id, expenseDto));
     }
