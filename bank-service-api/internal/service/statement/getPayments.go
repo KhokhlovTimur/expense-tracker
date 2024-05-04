@@ -6,7 +6,7 @@ import (
 )
 
 func (s *service) GetPayments(ctx context.Context, requestData *model.StatementRequest) (*model.Statements, error) {
-	acc, err := s.accountRepository.GetAccount(ctx, requestData.AccountNumber, requestData.Bank)
+	acc, err := s.accountRepository.GetAccount(ctx, requestData.AccountNumber, requestData.BankName)
 	if err != nil {
 		return nil, err
 	}
@@ -18,7 +18,7 @@ func (s *service) GetPayments(ctx context.Context, requestData *model.StatementR
 		}
 	}
 
-	acc, err = s.accountRepository.GetAccount(ctx, requestData.AccountNumber, requestData.Bank)
+	acc, err = s.accountRepository.GetAccount(ctx, requestData.AccountNumber, requestData.BankName)
 	if err != nil {
 		return nil, err
 	}

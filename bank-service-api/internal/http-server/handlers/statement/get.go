@@ -16,14 +16,14 @@ type Service interface {
 
 func New(ctx context.Context, service Service) http.HandlerFunc {
 	return func(writer http.ResponseWriter, request *http.Request) {
-		bankId := chi.URLParam(request, "bank_id")
-		if bankId == "" {
-			log.Println("failed to get bank id from url")
+		bankName := chi.URLParam(request, "bank_name")
+		if bankName == "" {
+			log.Println("failed to get bank name from url")
 
 			render.Status(request, http.StatusBadRequest)
 			render.JSON(writer, request, model.Response{
 				Status: http.StatusBadRequest,
-				Error:  "failed to get bank id from url",
+				Error:  "failed to get bank name from url",
 			})
 			return
 		}
@@ -46,7 +46,7 @@ func New(ctx context.Context, service Service) http.HandlerFunc {
 		}
 
 		statements, err := service.GetPayments(ctx, &model.StatementRequest{
-			Bank:          bankId,
+			BankName:      bankName,
 			AccountNumber: accId,
 			Period:        period,
 		})
@@ -61,7 +61,7 @@ func New(ctx context.Context, service Service) http.HandlerFunc {
 			return
 		}
 
-		log.Printf("quried bank<%s> account<%s>\n", bankId, accId)
+		log.Printf("quried bank<%s> account<%s>\n", bankName, accId)
 		render.Status(request, http.StatusCreated)
 		render.JSON(writer, request, statements)
 	}

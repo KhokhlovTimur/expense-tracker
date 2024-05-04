@@ -7,8 +7,15 @@ import (
 	"github.com/jackc/pgx/v5"
 )
 
-func (r *repository) GetAccount(ctx context.Context, accountNumber string, bankID string) (*model.Account, error) {
-	row := r.dbpool.QueryRow(ctx, "SELECT * FROM accounts WHERE bank_id = $1 and account_number = $2", bankID, accountNumber)
+func (r *repository) GetAccount(ctx context.Context, accountNumber string, bankName string) (*model.Account, error) {
+	row := r.dbpool.QueryRow(ctx, `
+						SELECT * 
+						FROM accounts 
+						WHERE bank_id IN (SELECT id FROM banks WHERE name = $1) 
+						  AND account_number = $2
+						`,
+		bankName,
+		accountNumber)
 
 	var (
 		id        string

@@ -7,7 +7,7 @@ type Statement struct {
 }
 
 type StatementRequest struct {
-	Bank          string `json:"bank"`
+	BankName      string `json:"bankName"`
 	AccountNumber string `json:"accountNumber"`
 	Period        Period `json:"period"`
 }

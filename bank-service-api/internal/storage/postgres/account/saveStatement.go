@@ -19,7 +19,7 @@ func (r *repository) SaveStatements(ctx context.Context, statements []model.Stat
 		ctx,
 		"INSERT INTO accounts(id, bank_id, account_number) VALUES ($1, $2, $3)",
 		accId,
-		requestData.Bank,
+		requestData.BankName,
 		requestData.AccountNumber,
 	)
 	if err != nil {
