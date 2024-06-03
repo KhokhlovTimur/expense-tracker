@@ -69,11 +69,11 @@ public class ExpenseServiceImpl implements ExpenseService {
     public ExpenseDto update(UUID id, UpdateExpenseRequestDto expenseDto) {
         Expense expense = getOrThrow(id);
 
-        checkBudget(expense.getUser().getId(),
-                expenseDto,
-                expenseCategoryService.findModelById(expenseDto.getCategoryId()).getBudget());
-
         if (expenseDto.getAmount() != null) {
+            checkBudget(expense.getUser().getId(),
+                    expenseDto,
+                    expenseCategoryService.findModelById(expenseDto.getCategoryId()).getBudget());
+
             expense.setAmount(expenseDto.getAmount());
         }
 
@@ -144,6 +144,35 @@ public class ExpenseServiceImpl implements ExpenseService {
         return ExpenseRangeResponseDto.builder()
                 .expenses(expenses)
                 .build();
+    }
+
+    @Override
+    public void deleteById(UUID id) {
+        try {
+            expenseRepository.deleteById(id);
+        } catch (IllegalArgumentException e) {
+            throw new NotFoundException(
+                    String.format("Расхода с id [%s] не существует", id)
+            );
+        }
+
+    }
+
+    @Override
+    public ExpenseDto updateFully(UUID id, UpdateExpenseRequestDto expenseDto) {
+        Expense expense = getOrThrow(id);
+
+        checkBudget(expense.getUser().getId(),
+                expenseDto,
+                expenseCategoryService.findModelById(expenseDto.getCategoryId()).getBudget());
+
+        expense.setAmount(expenseDto.getAmount());
+        expense.setCategory(expenseCategoryService.findModelById(expenseDto.getCategoryId()));
+        expense.setCurrency(currencyService.findModelByCode(expenseDto.getCode()));
+
+        return expenseMapper.toDto(
+                expenseRepository.save(expense)
+        );
     }
 
     private Double getAmount(UUID userId, UUID categoryId, String code) {

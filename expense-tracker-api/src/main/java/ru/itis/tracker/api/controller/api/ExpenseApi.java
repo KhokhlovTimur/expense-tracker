@@ -52,7 +52,7 @@ public interface ExpenseApi {
 
     @PatchMapping("/expense/{id}")
     @Tag(name = "Expense")
-    @Operation(summary = "Обновление информации о расходе")
+    @Operation(summary = "Частичное обновление информации о расходе")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "202", description = "Обновленная информация о расходе",
                     content = {
@@ -66,7 +66,30 @@ public interface ExpenseApi {
                     })
 
     })
-    ResponseEntity<ExpenseDto> update(@PathVariable("id") UUID id, @RequestBody @Valid UpdateExpenseRequestDto expenseDto);
+    ResponseEntity<ExpenseDto> updatePart(@PathVariable("id") UUID id, @RequestBody @Valid UpdateExpenseRequestDto expenseDto);
+
+    @PutMapping("/expense/{id}")
+    @Tag(name = "Expense")
+    @Operation(summary = "Полное обновление информации о расходе")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "202", description = "Обновленная информация о расходе",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = ExpenseDto.class))
+                    }),
+            @ApiResponse(responseCode = "404", description = "Информация об ошибке",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = ExceptionDto.class))
+                    })
+
+    })
+    ResponseEntity<ExpenseDto> updateFully(@PathVariable("id") UUID id, @RequestBody @Valid UpdateExpenseRequestDto expenseDto);
+
+    @DeleteMapping("/expense/{id}")
+    @Tag(name = "Expense")
+    @Operation(summary = "Удаление расхода")
+    ResponseEntity<Void> delete(@PathVariable("id") UUID id);
 
     @GetMapping("/user/{id}/expenses")
     @Tag(name = "User")
