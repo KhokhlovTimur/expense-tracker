@@ -1,12 +1,17 @@
-FROM eclipse-temurin:17-jdk-jammy AS build
-ENV HOME=/usr/app
-RUN mkdir -p $HOME
-WORKDIR $HOME
-ADD . $HOME
-RUN --mount=type=cache,target=/root/.m2 ./mvnw -f $HOME/pom.xml clean package
+#FROM eclipse-temurin:17-jdk-jammy AS build
+#ENV HOME=/usr/app
+#RUN mkdir -p $HOME
+#WORKDIR $HOME
+#ADD . $HOME
+#RUN --mount=type=cache,target=/root/.m2 $HOME/mvnw -f $HOME/pom.xml clean package
 
-FROM eclipse-temurin:17-jre-jammy
-ARG JAR_FILE=/usr/app/target/*.jar
-COPY --from=build $JAR_FILE /app/expense-tracker-api.jar
-EXPOSE 8080
-ENTRYPOINT java -jar /app/expense-tracker-api.jar
+#FROM eclipse-temurin:17-jre-jammy
+#ARG JAR_FILE=/usr/app/target/*.jar
+#COPY --from=build $JAR_FILE /app/expense-tracker-api.jar
+#EXPOSE 8080
+#ENTRYPOINT java -jar /app/expense-tracker-api.jar
+
+FROM eclipse-temurin:17-jdk-jammy
+COPY target/expense-tracker-api.jar expense-tracker-api.jar
+ENV TZ=Europe/Moscow
+ENTRYPOINT exec java $JAVA_OPTS -jar /expense-tracker-api.jar

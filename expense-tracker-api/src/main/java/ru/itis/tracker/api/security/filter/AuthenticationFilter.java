@@ -47,7 +47,9 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-
+        response.addHeader("Access-Control-Allow-Origin", "*");
+        response.addHeader("Access-Control-Allow-Credentials", "true");
+        response.addHeader("Access-Control-Allow-Methods", "*");
         if (requestParsingUtil.hasAuthorizationTokenInHeader(request)) {
             String refreshToken = requestParsingUtil.getTokenFromHeader(request);
 
@@ -71,8 +73,10 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         );
 
         //Добавляем рефреш токен в репозиторий после успешной аутентификации
+        response.addHeader("Access-Control-Allow-Origin", "http://localhost:3001");
+        response.addHeader("Access-Control-Allow-Credentials", "true");
+        response.addHeader("Access-Control-Allow-Methods", "*");
         tokensRepository.addRefreshToken(tokens.get("refreshToken"));
-
         objectMapper.writeValue(response.getWriter(), tokens);
     }
 

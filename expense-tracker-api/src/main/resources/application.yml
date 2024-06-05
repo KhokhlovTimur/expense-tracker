@@ -31,9 +31,9 @@ jwt:
   secret:
     key: secret
   access-token:
-    expires-time: 10800000
+    expires-time: 108000000
   refresh-token:
-    expires-time: 86400000
+    expires-time: 864000000
 
 default:
   page-size: 16
