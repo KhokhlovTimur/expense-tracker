@@ -2,21 +2,26 @@ version: "3.9"
 
 services:
 #  Можно закомментить только app и запустить приложение через ide
-  app:
+  main:
     container_name: 'expense-tracker'
     build:
-      context: ./
+      context: ./expense-tracker-api/.
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
     depends_on:
-      - postgres
+      - postgres-app
+      - redis
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB:-expenses_api}
       SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER:-postgres}
       SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-password}
+      SPRING_REDIS_HOST: redis
+      SPRING_REDIS_PORT: 6379
+      BANKS_API_URI: http://bank-api:8082
+      CURRENCY_API_KEY: ""
 
-  postgres:
+  postgres-app:
     image: postgres:latest
     container_name: 'postgres'
     environment:
@@ -34,5 +39,34 @@ services:
     volumes:
       - postgres_volume:/var/lib/postgresql/data
 
+  postgres-bank:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: bank_service
+      POSTGRES_USER: developer
+      POSTGRES_PASSWORD: developer
+    ports:
+      - "5433:5432"
+
+  bank-api:
+    build:
+      context: ./bank-service-api/.
+      dockerfile: Dockerfile
+    ports:
+      - "8082:8082"
+    restart: on-failure
+    depends_on:
+      - postgres-bank
+
+  redis:
+    image: redis
+    container_name: 'redis'
+    hostname: 'redis'
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_volume:/var/lib/redis/data
+
 volumes:
   postgres_volume:
+  redis_volume:

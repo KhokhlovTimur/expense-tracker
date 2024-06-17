@@ -17,6 +17,13 @@ import java.util.UUID;
 public class Bank {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+//    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+    private String name;
+    private String bic;
+    private String correspondentAccount;
+    private String kpp;
+    private String inn;
+    private String ogrn;
+
 }

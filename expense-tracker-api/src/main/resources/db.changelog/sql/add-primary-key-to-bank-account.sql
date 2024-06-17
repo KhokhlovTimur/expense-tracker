@@ -1,0 +1,1 @@
+alter table bank_accounts add constraint ba_pk primary key (account_number)

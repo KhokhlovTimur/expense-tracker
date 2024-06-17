@@ -1,0 +1,48 @@
+POST http://localhost:8080/api/auth/token
+Content-Type: application/x-www-form-urlencoded
+
+email=admin@mail.ru&password=admin
+
+###
+POST http://localhost:8080/api/auth/token
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxQG9rLnJ1Iiwicm9sZSI6IlVTRVIiLCJpc3MiOiIvYXBpL2F1dGgvdG9rZW4iLCJleHAiOjE3MTE5MDEyNzh9.I5ndlq8uf8Ivygwy6xqZ2bYfBqXtc98nkggs2byVWkU
+
+###
+POST http://localhost:8080/api/revoke/token
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxQG9rLnJ1Iiwicm9sZSI6IlVTRVIiLCJpc3MiOiIvYXBpL2F1dGgvdG9rZW4iLCJleHAiOjE3MTE4MjYwNzR9.wpE0tyIz0ac6OQ7LwxkCaQgFMDECJUH7GJ1Kw9D9frI
+
+###
+POST http://localhost:8080/api/user
+Content-Type: application/json
+
+{
+  "name": "name",
+  "surname": "surname",
+  "email": "admin@mail.ru",
+  "password": "admin"
+}
+
+
+###
+GET http://localhost:8080/api/us
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxQG9rLnJ1Iiwicm9sZSI6IlVTRVIiLCJpc3MiOiIvYXBpL2F1dGgvdG9rZW4iLCJleHAiOjE3MTE4MjYwNzR9.wpE0tyIz0ac6OQ7LwxkCaQgFMDECJUH7GJ1Kw9D9frI
+
+###
+POST http://localhost:8080/api/bank
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxQG9rLnJ1Iiwicm9sZSI6IlVTRVIiLCJpc3MiOiIvYXBpL2F1dGgvdG9rZW4iLCJleHAiOjE3MTE4ODg2NDF9.w6q0QHooYQbmsZ66emrMNhOLCzCEsWrB_lKRdIV7wN0
+
+{
+  "name": "Банк",
+  "bic": "222222222",
+  "correspondentAccount": "22222222200000000600",
+  "kpp": "111111111",
+  "inn": "111111111111",
+  "ogrn": "1111111111111"
+}
+
+###
+GET http://localhost:8080/api/user/ea21c1da-0fa6-4728-9816-1a1bd2f3554a/expenses/range?from=2024-04-03&to=2024-04-05
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxQG9rLnJ1Iiwicm9sZSI6IlVTRVIiLCJpc3MiOiIvYXBpL2F1dGgvdG9rZW4iLCJleHAiOjE3MTI0MDM4Mjh9.7uog_RLKkOQc2aAqy-ngkauE68AvzJHJVp2ChN-jfvE
+
